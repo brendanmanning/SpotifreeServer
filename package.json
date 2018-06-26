@@ -9,6 +9,7 @@
   "author": "Brendan Manning",
   "license": "ISC",
   "dependencies": {
+    "asyncawait": "^1.0.7",
     "express": "^4.16.3",
     "mocha": "^5.2.0",
     "ytdl-core": "^0.20.4"
