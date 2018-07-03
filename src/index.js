@@ -1,15 +1,21 @@
 const fs = require('fs');
-const ytdl = require('ytdl-core');
 
-var express = require('express')
-var app = express()
+var express = require('express');
+var app = express();
+var http = require('http').Server(app);
+
+const Library = require('./Library.js');
 
 // respond with "hello world" when a GET request is made to the homepage
 app.get('/all/:limit', function (req, res) {
-  res.send('hello world')
+    Library.all();
 })
 
+app.post('/download/:id/',  function (req, res) {
+    console.log(JSON.stringify(req.body));
+     Library.download(req.params.id, req.body.title, req.body.artist, req.body.album);
+});
 
-function download(video) {
-    ytdl("https://www.youtube.com/watch?v=dPKG1-3LXBs", { quality: 'highestaudio', filter: 'audioonly' }).pipe(fs.createWriteStream('readyornot.mp3'));
-}
+http.listen(3000, function(){
+    console.log('listening on *:3000');
+});
