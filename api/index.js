@@ -18,9 +18,9 @@ app.get('/all/:limit', function (req, res) {
     Library.all();
 })
 
-app.post('/download/:id/',  function (req, res) {
-    console.log(JSON.stringify(req.body));
-     Library.download(req.params.id, req.body.title, req.body.artist, req.body.album);
+app.post('/download/:id/', async function (req, res) {
+    await Library.download(req.params.id, req.body.title, req.body.artist, req.body.album);
+    console.log("[ info ]: Downloaded (" + req.params.id + ") " + req.body.title);
 });
 
 http.listen(3000, function(){

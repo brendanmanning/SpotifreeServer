@@ -24,8 +24,8 @@ class Library {
     } 
 
     static async download(id, title, artist, album) {
-        await ytdl("https://www.youtube.com/watch?v=" + id, { quality: 'highestaudio', filter: 'audioonly' }).pipe(fs.createWriteStream(id + '.mp3'));
-        console.log("Done....");
+        var dl = ytdl("https://www.youtube.com/watch?v=" + id, { quality: 'highestaudio', filter: 'audioonly' });
+        await dl.pipe(fs.createWriteStream('data/music/' + id + '.mp3'));
     }
 }
 
