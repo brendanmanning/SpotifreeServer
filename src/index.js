@@ -1,9 +1,16 @@
 const fs = require('fs');
 
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
+// Imports for routing and http
+var express        =        require("express");
+var bodyParser     =        require("body-parser");
+var app            =        express();
+var http           =        require('http').Server(app);
 
+// Configure express for the POST parser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Connect to the music Library
 const Library = require('./Library.js');
 
 // respond with "hello world" when a GET request is made to the homepage
