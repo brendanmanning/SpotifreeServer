@@ -1,6 +1,6 @@
 {
   "name": "spotifreeserver",
-  "version": "10.0.0",
+  "version": "10.0.1",
   "description": "Serves downloaded youtube videos to the Spotifree client",
   "main": "src/index.js",
   "scripts": {
