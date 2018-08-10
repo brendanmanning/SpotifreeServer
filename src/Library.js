@@ -52,9 +52,9 @@ class Library {
 
         console.log("Download: " + "https://www.youtube.com/watch?v=" + id);
 
-        var video = await ytdl.exec("https://www.youtube.com/watch?v=" + id, ['-x', '--audio-format', 'mp3', '-o', './data/music/%(id)s.%(ext)s'], {}, async function(e,o) {
+        var video = ytdl.exec("https://www.youtube.com/watch?v=" + id, ['-x', '--audio-format', 'mp3', '-o', './data/music/%(id)s.%(ext)s'], {}, function(e,o) {
         });
-        await Helper.writeJsonToFile({
+        Helper.writeJsonToFile({
             title: title,
             artist: artist,
             album: album
