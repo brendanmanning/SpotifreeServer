@@ -4,7 +4,7 @@ var await = require('asyncawait/await');
 var fs = require('fs');
 var fse = require('fs-extra');
 
-const ytdl = require('ytdl-core');
+const ytdl = require('youtube-dl');
 
 const Helper = require('./Helper.js');
 
@@ -29,9 +29,10 @@ class Library {
                 
                 // Link to the metadata file
                 try {
-                    var meta = JSON.parse(item);
+                    var meta = await fse.readFile('data/metadata/' + id + ".json", "utf-8");
+                    meta = JSON.parse(meta);
                     meta.id = id;
-                    meta.url = Config.RES_WEB_ADDRESS + id + ".m4a";
+                    meta.url = Config.RES_WEB_ADDRESS + id + ".mp3";
                     meta.type = "song";
                 
                     arr.push(meta);
@@ -48,13 +49,23 @@ class Library {
     } 
 
     static async download(id, title, artist, album) {
-        var dl = await ytdl("https://www.youtube.com/watch?v=" + id, { filter: (format) => format.container === 'm4a' });
-        await dl.pipe(fs.createWriteStream('data/music/' + id + '.m4a'));
-        await Helper.writeJsonToFile({
-            title: title,
-            artist: artist,
-            album: album
-        }, "data/metadata/" + id + ".json");
+
+        console.log("Download: " + "https://www.youtube.com/watch?v=" + id);
+
+        var video = await ytdl.exec("https://www.youtube.com/watch?v=" + id, ['-x', '--audio-format', 'mp3', '-o', './data/music/%(id)s.%(ext)s'], {}, async function(e,o) {
+        
+            await Helper.writeJsonToFile({
+                title: title,
+                artist: artist,
+                album: album
+            }, "data/metadata/" + id + ".json"); 
+
+        });
+
+
+        //var dl = await ytdl("https://www.youtube.com/watch?v=" + id, { filter: (format) => format.container === 'm4a' });
+        //await dl.pipe(fs.createWriteStream('data/music/' + id + '.m4a'));
+        
 
     }
 }
