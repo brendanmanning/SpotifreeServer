@@ -1,4 +1,4 @@
-mv SpotifreeServer/data data
+mv SpotifreeServer/data/* data/*
 rm -rf SpotifreeServer
 git clone https://github.com/brendanmanning/SpotifreeServer.git
-mv data SpotifreeServer/data
+mv data/* SpotifreeServer/data/*
